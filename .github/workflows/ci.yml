@@ -8,7 +8,6 @@ on:
 
 env:
   FLUTTER_VERSION: '3.24.0'
-  PUB_CACHE: '.pub-cache'
 
 jobs:
   analyze:
@@ -47,16 +46,7 @@ jobs:
         run: flutter pub get
 
       - name: Run Flutter tests
-        run: flutter test --coverage
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
-        if: always()
-        with:
-          files: ./coverage/lcov.info
-          flags: unittests
-          name: Ell-ena
-          fail_ci_if_error: false
+        run: flutter test
 
   build-android:
     name: Build Android APK
@@ -120,6 +110,3 @@ jobs:
 
       - name: Check formatting
         run: flutter format --set-exit-if-changed .
-
-      - name: Run Dart analyzer
-        run: dart analyze
