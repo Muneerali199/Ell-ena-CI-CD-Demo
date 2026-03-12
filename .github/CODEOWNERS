@@ -1,0 +1,21 @@
+# CODEOWNERS - Auto-assign reviewers for PRs
+
+# Default owner for all files
+* @AOSSIE-Org/Ell-ena-maintainers
+
+# Dart/Flutter files
+*.dart @AOSSIE-Org/Ell-ena-maintainers
+pubspec.yaml @AOSSIE-Org/Ell-ena-maintainers
+analysis_options.yaml @AOSSIE-Org/Ell-ena-maintainers
+
+# CI/CD Workflows
+.github/workflows/*.yml @AOSSIE-Org/Ell-ena-maintainers
+
+# Database & SQL
+/sqls/ @AOSSIE-Org/Ell-ena-maintainers
+
+# Supabase Configuration
+/supabase/ @AOSSIE-Org/Ell-ena-maintainers
+
+# Library code
+/lib/ @AOSSIE-Org/Ell-ena-maintainers

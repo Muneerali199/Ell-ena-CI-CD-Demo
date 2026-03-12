@@ -1,0 +1,60 @@
+name: Security Scanning
+
+on:
+  schedule:
+    - cron: '0 9 * * Monday'
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  dependency-scan:
+    name: Dependency Vulnerability Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Run Dart security analyzer
+        run: dart pub outdated --json-report --json-report-file=outdated.json
+
+      - name: Upload outdated report
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-report
+          path: outdated.json
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: moderate
+
+  code-scanning:
+    name: Code Quality & Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: dart
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
