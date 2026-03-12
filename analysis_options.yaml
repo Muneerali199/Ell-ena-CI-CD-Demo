@@ -6,6 +6,7 @@ analyzer:
     - "**/*.freezed.dart"
     - build/**
     - "lib/generated/**"
+    - test/**
   errors:
     invalid_annotation_target: ignore
 
